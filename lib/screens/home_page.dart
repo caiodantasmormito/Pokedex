@@ -17,6 +17,7 @@ class MyHomePage extends StatelessWidget {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(list[index].name),
+                leading: Image.network(list[index].image),
               );
             }));
   }
