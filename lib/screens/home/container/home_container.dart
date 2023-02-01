@@ -1,14 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:pokedex/error/failure.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/repository/pokemon_repository.dart';
-import 'package:pokedex/screens/home_error.dart';
-import 'package:pokedex/screens/home_loading.dart';
-import 'package:pokedex/screens/home_page.dart';
+import 'package:pokedex/screens/details/container/detail_container.dart';
+
+import '../pages/home_error.dart';
+import '../pages/home_loading.dart';
+import '../pages/home_page.dart';
 
 class HomeContainer extends StatelessWidget {
-  const HomeContainer({Key? key, required this.repository}) : super(key: key);
+  const HomeContainer({
+    Key? key,
+    required this.repository,
+    required this.onItemTap,
+  }) : super(key: key);
   final IPokemonRepository repository;
+  final Function(String, DetailArguments) onItemTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +30,7 @@ class HomeContainer extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
           return MyHomePage(
-            list: snapshot.data!,
+            list: snapshot.data!, onItemTap: onItemTap,
           );
         }
         if (snapshot.hasError) {
